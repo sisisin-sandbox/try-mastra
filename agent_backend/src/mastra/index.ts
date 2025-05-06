@@ -19,6 +19,7 @@ export const mastra = new Mastra({
       {
         path: '*',
         handler: async (c, next) => {
+          console.log(`Request: ${c.req.method} ${c.req.url}`);
           if (process.env.NODE_ENV !== 'production' && process.env.IS_LOCAL === 'true') {
             return next();
           }
