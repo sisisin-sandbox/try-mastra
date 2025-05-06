@@ -14,4 +14,25 @@ export const mastra = new Mastra({
     name: 'Mastra',
     level: 'info',
   }),
+  server: {
+    middleware: [
+      {
+        path: '*',
+        handler: async (c, next) => {
+          if (process.env.NODE_ENV !== 'production' && process.env.IS_LOCAL === 'true') {
+            return next();
+          }
+
+          const apiKey = c.req.header('Authorization');
+          if (!apiKey) {
+            return new Response('Unauthorized', { status: 401 });
+          }
+          if (apiKey !== `Bearer ${process.env.MASTRA_API_KEY}`) {
+            return new Response('Unauthorized', { status: 401 });
+          }
+          return next();
+        },
+      },
+    ],
+  },
 });

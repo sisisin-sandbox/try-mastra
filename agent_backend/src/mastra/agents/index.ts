@@ -4,7 +4,7 @@ import { Memory } from '@mastra/memory';
 import { weatherTool } from '../tools';
 
 export const weatherAgent = new Agent({
-  name: 'Weather Agent',
+  name: 'weatherAgent',
   instructions: `
       You are a helpful weather assistant that provides accurate weather information.
 

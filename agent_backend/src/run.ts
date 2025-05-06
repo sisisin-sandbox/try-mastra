@@ -11,21 +11,22 @@ async function main() {
   console.log(response.text);
 }
 
-await main();
-
 import { MastraClient } from '@mastra/client-js';
 
 const client = new MastraClient({
-  baseUrl: 'http://localhost:3000/api/mastra',
+  baseUrl: 'http://localhost:4111',
+  // baseUrl: 'https://sparse-howling-football.mastra.cloud',
   headers: {
     Authorization: `Bearer ${process.env.MASTRA_API_KEY}`,
   },
 });
 
 async function mastraMain() {
-  const a = await client.getAgent('weather-agent');
+  const a = await client.getAgent('weatherAgent');
   const res = await a.generate({
     messages: [{ role: 'user', content: 'What is the weather like in New York?' }],
   });
   console.log(res);
 }
+// await main();
+await mastraMain();
