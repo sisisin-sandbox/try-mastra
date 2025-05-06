@@ -19,9 +19,14 @@ export const mastra = new Mastra({
       {
         path: '*',
         handler: async (c, next) => {
-          console.log(`Request: ${c.req.method} ${c.req.url}`);
           if (process.env.NODE_ENV !== 'production' && process.env.IS_LOCAL === 'true') {
             return next();
+          } else {
+            const u = new URL(c.req.url);
+            // health check for mastra cloud
+            if (c.req.method === 'GET' && u.pathname === '/api/agents') {
+              return next();
+            }
           }
 
           const apiKey = c.req.header('Authorization');
